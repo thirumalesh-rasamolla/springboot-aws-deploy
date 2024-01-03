@@ -4,8 +4,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR....
       - aws --version
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 281798031104.dkr.ecr.us-east-2.amazonaws.com
-      - REPOSITORY_URI=281798031104.dkr.ecr.us-east-2.amazonaws.com/thiru-ecs-demo
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 975050359816.dkr.ecr.us-east-1.amazonaws.com
+      - REPOSITORY_URI=975050359816.dkr.ecr.us-east-1.amazonaws.com/ecs-demo
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
@@ -23,7 +23,7 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
       # Give your container name
-      - DOCKER_CONTAINER_NAME=thiru-ecs-demo
+      - DOCKER_CONTAINER_NAME=ecs-demo
       - printf '[{"name":"%s","imageUri":"%s"}]' $DOCKER_CONTAINER_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
       - echo $DOCKER_CONTAINER_NAME
       - echo printing imagedefinitions.json
